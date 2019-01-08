@@ -28,7 +28,7 @@ function updateProduct() {
     inquirer.prompt([
         {
             name: "id",
-            message: "\nWhat is the ID of the product you would like to purchase?"
+            message: "What is the ID of the product you would like to purchase?"
         }, {
             name: "quantity",
             message: "How many units of the product would you like to purchase?"
@@ -37,22 +37,23 @@ function updateProduct() {
         [{
             id: answer.id
         }], function (err, res) {
-            console.log(res[0].stock_quantity);
             if (err) throw err;
             if(res[0].stock_quantity < 0) {
                 console.log("Insufficient quantity!");
             }
             else {
-                connection.query("UPDATE products WHERE ? SET ?",
+                connection.query("UPDATE products SET ? WHERE ?",
                 [{
-                    id: answer.id
-                }, {
                     stock_quantity: res[0].stock_quantity -  answer.quantity
+                }, {
+                    id: answer.id
                 }], function (err, res) {
                     if(err) throw err;
-                    console.log(res);
                 });
             }
+            var total = res[0].price * answer.quantity;
+            console.log("Your total: $" + total);
+            console.log("Thank you for shopping with us!");
         });
     });
 }
