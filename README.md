@@ -61,7 +61,7 @@ Displays a set of menu options:
 Displays a set of menu options:
 
 * `View Porduct Sales by Department`
-  * lists each department's information including names, over head costs, product sales, and toatal profit.
+  * lists each department's information including names, over head costs, product sales, and total profit.
 
   ![Image of supervisor view](/images/supervisor_view.png)
 
