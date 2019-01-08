@@ -38,12 +38,14 @@ function updateProduct() {
         [{
             id: answer.id
         }], function (err, res) {
+            var total = 0;
             if (err) throw err;
-            if(res[0].stock_quantity < 0) {
+            if(res[0].stock_quantity < answer.quantity) {
+                console.log("\n");
                 console.log("Insufficient quantity!");
             }
             else {
-                var total = res[0].price * answer.quantity;
+                total = res[0].price * answer.quantity;
                 connection.query("UPDATE products SET ? WHERE ?",
                 [{
                     stock_quantity: res[0].stock_quantity -  answer.quantity,
@@ -54,6 +56,7 @@ function updateProduct() {
                     if(err) throw err;
                 });
             }
+            console.log("\n");
             console.log("Your total: $" + total);
             console.log("Thank you for shopping with us!");
         });
