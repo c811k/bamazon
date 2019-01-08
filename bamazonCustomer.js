@@ -20,6 +20,7 @@ function displayProduct() {
         for(let i = 0; i < results.length; i++) {
             console.log("\nID: " + results[i].id + " | NAME: " + results[i].product_name + " | PRICE: $" + results[i].price + " | QTY: " + results[i].stock_quantity);
         }
+        console.log("\n");
         updateProduct();
     });
 }
@@ -42,16 +43,17 @@ function updateProduct() {
                 console.log("Insufficient quantity!");
             }
             else {
+                var total = res[0].price * answer.quantity;
                 connection.query("UPDATE products SET ? WHERE ?",
                 [{
-                    stock_quantity: res[0].stock_quantity -  answer.quantity
+                    stock_quantity: res[0].stock_quantity -  answer.quantity,
+                    product_sales: res[0].product_sales + total
                 }, {
                     id: answer.id
                 }], function (err, res) {
                     if(err) throw err;
                 });
             }
-            var total = res[0].price * answer.quantity;
             console.log("Your total: $" + total);
             console.log("Thank you for shopping with us!");
         });
